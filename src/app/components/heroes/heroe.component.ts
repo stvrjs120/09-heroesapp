@@ -18,7 +18,7 @@ export class HeroeComponent implements OnInit {
     casa: 'Marvel'
   };
 
-  nuevo: boolean = false;
+  nuevo = false;
   id: string;
 
   constructor(private _heroeService: HeroesService,
@@ -27,6 +27,11 @@ export class HeroeComponent implements OnInit {
     this.route.params
       .subscribe(parametros => {
         this.id = parametros['id'];
+
+        if (this.id !== 'nuevo') {
+          this._heroeService.getHeroe(this.id)
+            .subscribe(data => this.heroe = data);
+        }
       });
   }
 
@@ -50,4 +55,10 @@ export class HeroeComponent implements OnInit {
     }
   }
 
+  agregarNuevo(forma: NgForm) {
+    this.router.navigate(['/heroe', 'nuevo']);
+    forma.reset( {
+      casa: 'Marvel'
+    });
+  }
 }

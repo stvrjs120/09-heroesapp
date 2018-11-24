@@ -29,9 +29,28 @@ export class HeroesService {
 
   actualizaHeroe(heroe: Heroe, key$: string) {
     const body = JSON.stringify(heroe);
-    let url = `${this.heroeURL}/${key$}.json`;
+    const url = `${this.heroeURL}/${key$}.json`;
 
     return this.http.put( url, body, httpOptions )
+      .pipe();
+  }
+
+  getHeroe(key$: string) {
+    const url = `${this.heroeURL}/${key$}.json`;
+
+    return this.http.get(url)
+      .pipe();
+  }
+
+  getHeroes() {
+    return this.http.get(this.heroesURL)
+      .pipe();
+  }
+
+  borraHeroe(key$: string) {
+    let url = `${this.heroeURL}/${key$}.json`;
+
+    return this.http.delete(url)
       .pipe();
   }
 }

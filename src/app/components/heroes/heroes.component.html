@@ -17,18 +17,33 @@
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Casa</th>
-                        <th>Opciones</th>
+                        <th class="text-right">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr *ngFor="let k of heroes | keys; let i = index">
+                        <td>{{i + 1}}</td>
+                        <td>{{heroes[k].nombre}}</td>
+                        <td>{{heroes[k].casa}}</td>
+                        <td class="text-right">
+                            <button [routerLink]="['/heroe', k]" name="editar" id="editar" class="btn btn-outline-success" type="button">
+                                <i class="far fa-edit"></i>
+                            </button>
+                            <button (click)="borraHeroe(k)" name="eliminar" id="eliminar" class="btn btn-outline-danger" type="button">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+
+            <div *ngIf="(heroes | keys).length === 0 && !loading" class="alert alert-info" role="alert">
+                <strong>No hay</strong> registros que mostrar
+            </div>
+
+            <div *ngIf="loading" class="alert alert-warning" role="alert">
+                <i class="fas fa-sync-alt fa-spin"></i><strong>Cargando...</strong> por favor espere
+            </div>
         </div>
     </div>
 </div>
